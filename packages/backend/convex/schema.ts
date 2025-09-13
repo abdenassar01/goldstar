@@ -2,8 +2,29 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export default defineSchema({
-	todos: defineTable({
-		text: v.string(),
-		completed: v.boolean(),
-	}),
+  categories: defineTable({
+    name: v.string(),
+    icon: v.string(),
+  }).index("by_name", ["name"]),
+  marks: defineTable({
+    name: v.string(),
+    icon: v.string(),
+  }).index("by_name", ["name"]),
+  items: defineTable({
+    name: v.string(),
+    coverImage: v.string(),
+    gallery: v.optional(v.array(v.string())),
+    categoryId: v.id("categories"),
+    markId: v.id("marks"),
+    variants: v.array(
+      v.object({
+        name: v.string(),
+        price: v.number(),
+      })
+    ),
+  })
+    .index("by_category_mark", ["categoryId", "markId"])
+    .index("by_category", ["categoryId"])
+    .index("by_mark", ["markId"])
+    .index("by_name", ["name"]),
 });
