@@ -15,7 +15,10 @@
     "dev:server": "turbo -F @goldstart/backend dev",
     "dev:setup": "turbo -F @goldstart/backend dev:setup"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@hugeicons/core-free-icons": "^1.0.17",
+    "@hugeicons/react": "^1.1.1"
+  },
   "devDependencies": {
     "turbo": "^2.5.4"
   },

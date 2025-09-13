@@ -15,7 +15,8 @@
 		"rootDirs": [".", "./.react-router/types"],
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"@goldstart/backend/*": ["../../packages/backend/*"]
 		},
 		"esModuleInterop": true,
 		"verbatimModuleSyntax": true,

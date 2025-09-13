@@ -51,8 +51,10 @@ export const get = query({
 export const create = mutation({
   args: {
     name: v.string(),
-    coverImage: v.string(),
-    gallery: v.optional(v.array(v.string())),
+    description: v.optional(v.string()),
+    price: v.optional(v.number()),
+    coverImage: v.id("_storage"),
+    gallery: v.optional(v.array(v.id("_storage"))),
     categoryId: v.id("categories"),
     markId: v.id("marks"),
     variants: v.array(Variant),
@@ -67,8 +69,10 @@ export const update = mutation({
   args: {
     id: v.id("items"),
     name: v.string(),
-    coverImage: v.string(),
-    gallery: v.optional(v.array(v.string())),
+    description: v.optional(v.string()),
+    price: v.optional(v.number()),
+    coverImage: v.id("_storage"),
+    gallery: v.optional(v.array(v.id("_storage"))),
     categoryId: v.id("categories"),
     markId: v.id("marks"),
     variants: v.array(Variant),
