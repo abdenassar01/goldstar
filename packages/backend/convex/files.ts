@@ -11,6 +11,7 @@ export const getFileUrl = query({
 export const generateUploadUrl = mutation({
   args: {},
   handler: async (ctx) => {
-    return await ctx.storage.generateUploadUrl();
+    const uploadUrl = await ctx.storage.generateUploadUrl();
+    return uploadUrl;
   },
 });
