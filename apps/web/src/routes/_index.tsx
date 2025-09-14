@@ -14,12 +14,10 @@ export function meta({}: Route.MetaArgs) {
 export default function Home() {
 	const [searchParams, setSearchParams] = useSearchParams();
 
-	// Selections from URL
 	const categoryId = searchParams.get("category_id");
 	const markId = searchParams.get("mark_id");
 	const q = searchParams.get("q") ?? "";
 
-	// Data
 	const categories = useQuery(api.categories.list, { search: undefined });
 	const marks = useQuery(api.marks.list, { search: undefined });
 	const items = useQuery(api.items.list, {
@@ -28,7 +26,18 @@ export default function Home() {
 		search: q || undefined,
 	});
 
-	// Step derivation
+	// Resolve storageId icons to URLs (batched)
+	const categoryIconIds = (categories?.map((c) => c.icon as Id<"_storage">) ?? []);
+	const categoryIcons = useQuery(
+		api.files.getFileUrls,
+		categories ? { storageIds: categoryIconIds } : "skip",
+	);
+	const markIconIds = (marks?.map((m) => m.icon as Id<"_storage">) ?? []);
+	const markIcons = useQuery(
+		api.files.getFileUrls,
+		marks ? { storageIds: markIconIds } : "skip",
+	);
+
 	const step = !categoryId ? 1 : !markId ? 2 : 3;
 
 	function updateParams(mutator: (p: URLSearchParams) => void) {
@@ -60,27 +69,34 @@ export default function Home() {
 	}
 
 	return (
-		<div className="container mx-auto max-w-4xl px-4 py-6">
+		<div className="container mx-auto ">
 			<div className="grid gap-6">
 				{step === 1 && (
 					<section className="rounded-lg border p-4">
-						<h2 className="mb-3 font-medium">Choose a Category</h2>
 						{categories === undefined ? (
 							<div className="text-sm text-muted-foreground">Loading categories…</div>
 						) : categories.length === 0 ? (
 							<div className="text-sm text-muted-foreground">No categories.</div>
 						) : (
 							<div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-								{categories.map((c) => (
-									<button
-										key={c._id}
-										onClick={() => selectCategory(c._id)}
-										className="rounded-lg border p-3 text-left transition hover:border-primary hover:bg-primary/5"
-									>
-										<div className="font-medium">{c.name}</div>
-										<div className="text-xs text-muted-foreground">Select</div>
-									</button>
-								))}
+								{categories.map((c) => {
+									const iconUrl = categoryIcons?.find((x) => x.storageId === (c.icon as Id<"_storage">))?.url ?? undefined;
+									return (
+										<button
+											key={c._id}
+											onClick={() => selectCategory(c._id)}
+											className="rounded-lg border p-3 text-left transition hover:border-primary hover:bg-primary/5"
+										>
+											{iconUrl ? (
+												<img alt="" src={iconUrl} className="w-20 rounded border object-cover" />
+											) : (
+												<div className="w-20 rounded border bg-muted" />
+											)}
+											<div className="font-medium">{c.name}</div>
+											<div className="text-xs text-muted-foreground">Select</div>
+										</button>
+									);
+								})}
 							</div>
 						)}
 					</section>
@@ -95,16 +111,24 @@ export default function Home() {
 							<div className="text-sm text-muted-foreground">No marks.</div>
 						) : (
 							<div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-								{marks.map((m) => (
-									<button
-										key={m._id}
-										onClick={() => selectMark(m._id)}
-										className="rounded-lg border p-3 text-left transition hover:border-primary hover:bg-primary/5"
-									>
-										<div className="font-medium">{m.name}</div>
-										<div className="text-xs text-muted-foreground">Select</div>
-									</button>
-								))}
+								{marks.map((m) => {
+									const iconUrl = markIcons?.find((x) => x.storageId === (m.icon as Id<"_storage">))?.url ?? undefined;
+									return (
+										<button
+											key={m._id}
+											onClick={() => selectMark(m._id)}
+											className="rounded-lg border p-3 text-left transition hover:border-primary hover:bg-primary/5"
+										>
+											{iconUrl ? (
+												<img alt="" src={iconUrl} className="w-20 rounded object-cover" />
+											) : (
+												<div className="w-20 border bg-muted" />
+											)}
+											<div className="font-medium">{m.name}</div>
+											<div className="text-xs text-muted-foreground">Select</div>
+										</button>
+									);
+								})}
 							</div>
 						)}
 					</section>

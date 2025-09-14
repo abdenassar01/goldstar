@@ -15,3 +15,11 @@ export const generateUploadUrl = mutation({
     return uploadUrl;
   },
 });
+
+export const getFileUrls = query({
+  args: { storageIds: v.array(v.id("_storage")) },
+  handler: async (ctx, { storageIds }) => {
+    const urls = await Promise.all(storageIds.map((sid) => ctx.storage.getUrl(sid)));
+    return storageIds.map((storageId, i) => ({ storageId, url: urls[i] }));
+  },
+});
