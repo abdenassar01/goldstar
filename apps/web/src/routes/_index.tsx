@@ -69,31 +69,31 @@ export default function Home() {
 	}
 
 	return (
-		<div className="container mx-auto ">
+		<div className="container mx-auto flex justify-center items-center p-4">
 			<div className="grid gap-6">
 				{step === 1 && (
-					<section className="rounded-lg border p-4">
+					<section className="">
 						{categories === undefined ? (
 							<div className="text-sm text-muted-foreground">Loading categories…</div>
 						) : categories.length === 0 ? (
 							<div className="text-sm text-muted-foreground">No categories.</div>
 						) : (
-							<div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+							<div className="grid grid-cols-2 grid-rows-1 gap-2 sm:grid-cols-3 md:grid-cols-6 lg:grid-cols-8">
 								{categories.map((c) => {
 									const iconUrl = categoryIcons?.find((x) => x.storageId === (c.icon as Id<"_storage">))?.url ?? undefined;
 									return (
 										<button
 											key={c._id}
 											onClick={() => selectCategory(c._id)}
-											className="rounded-lg border p-3 text-left transition hover:border-primary hover:bg-primary/5"
+											className="rounded-lg border p-2 text-left transition hover:border-primary hover:bg-primary/5"
 										>
 											{iconUrl ? (
-												<img alt="" src={iconUrl} className="w-20 rounded border object-cover" />
+												<img alt="" src={iconUrl} className="w-full rounded border object-cover" />
 											) : (
 												<div className="w-20 rounded border bg-muted" />
 											)}
-											<div className="font-medium">{c.name}</div>
-											<div className="text-xs text-muted-foreground">Select</div>
+											<div className="font-medium mt-3 text-center text-primary">{c.name}</div>
+
 										</button>
 									);
 								})}
@@ -103,8 +103,7 @@ export default function Home() {
 				)}
 
 				{step === 2 && (
-					<section className="rounded-lg border p-4">
-						<h2 className="mb-3 font-medium">Choose a Mark</h2>
+					<section className="">
 						{marks === undefined ? (
 							<div className="text-sm text-muted-foreground">Loading marks…</div>
 						) : marks.length === 0 ? (
@@ -120,12 +119,11 @@ export default function Home() {
 											className="rounded-lg border p-3 text-left transition hover:border-primary hover:bg-primary/5"
 										>
 											{iconUrl ? (
-												<img alt="" src={iconUrl} className="w-20 rounded object-cover" />
+												<img alt="" src={iconUrl} className="w-full rounded object-contain aspect-square" />
 											) : (
 												<div className="w-20 border bg-muted" />
 											)}
-											<div className="font-medium">{m.name}</div>
-											<div className="text-xs text-muted-foreground">Select</div>
+											<div className="font-medium mt-3 text-center text-primary">{m.name}</div>
 										</button>
 									);
 								})}
