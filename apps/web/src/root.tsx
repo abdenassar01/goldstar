@@ -11,6 +11,7 @@ import "./index.css";
 import Header from "./components/header";
 import { ThemeProvider } from "./components/theme-provider";
 import { Toaster } from "./components/ui/sonner";
+import { DownloadButton } from "./components/download-button";
 
 import { ConvexReactClient } from "convex/react";
 import { ConvexProvider } from "convex/react";
@@ -63,6 +64,7 @@ export default function App() {
 					<Outlet />
 				</div>
 				<Toaster richColors />
+				<DownloadButton />
 			</ThemeProvider>
 		</ConvexProvider>
 	);

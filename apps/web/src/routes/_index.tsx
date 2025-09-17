@@ -123,7 +123,7 @@ export default function Home() {
 											) : (
 												<div className="w-20 border bg-muted" />
 											)}
-											<div className="font-medium mt-3 text-center text-primary">{m.name}</div>
+
 										</button>
 									);
 								})}
@@ -150,16 +150,23 @@ export default function Home() {
 						) : (
 							<ul className="divide-y rounded-md border">
 								{items.map((it) => (
-									<li key={it._id} className="flex items-center justify-between gap-3 p-3">
+									<li key={it._id} className="flex flex-col items-center justify-between gap-3 p-3">
 										<div>
 											<div className="font-medium">{it.name}</div>
 											{it.description ? (
 												<div className="text-xs text-muted-foreground line-clamp-1">{it.description}</div>
 											) : null}
 										</div>
-										{typeof it.price === "number" ? (
-											<div className="text-sm tabular-nums">${""}{it.price.toFixed(2)}</div>
-										) : null}
+
+										{it.variants && it.variants.length > 0 ? (
+											it.variants.map((v, i) => (
+												<div key={i} className="whitespace-nowrap text-sm font-medium">
+													{v.name}: {v.price.toFixed(2)} DH
+												</div>
+											))
+										) : (
+											<div className="whitespace-nowrap text-sm text-muted-foreground">No variants</div>
+										)}
 									</li>
 								))}
 							</ul>
