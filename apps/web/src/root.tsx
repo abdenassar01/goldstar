@@ -59,10 +59,10 @@ export default function App() {
 				disableTransitionOnChange
 				storageKey="vite-ui-theme"
 			>
-				<div className="grid grid-rows-[auto_1fr] h-svh">
+				<main className="grid grid-rows-[auto_1fr] h-svh backdrop-blur-3xl">
 					{/* <Header /> */}
 					<Outlet />
-				</div>
+				</main>
 				<Toaster richColors />
 				<DownloadButton />
 			</ThemeProvider>

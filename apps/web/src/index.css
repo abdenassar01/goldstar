@@ -11,8 +11,10 @@
 
 html,
 body {
-	@apply bg-white dark:bg-gray-950;
-
+	@apply bg-background text-foreground;
+	background: radial-gradient(ellipse at top, #000000, #000200),
+		radial-gradient(ellipse at bottom, #000000, #020000);
+	min-height: 100vh;
 	@media (prefers-color-scheme: dark) {
 		color-scheme: dark;
 	}
@@ -25,7 +27,7 @@ body {
   --card-foreground: oklch(0.4355 0.0430 279.3250);
   --popover: oklch(0.8575 0.0145 268.4756);
   --popover-foreground: oklch(0.4355 0.0430 279.3250);
-  --primary: oklch(0.5547 0.2503 297.0156);
+  --primary: oklch(93.769% 0.19726 105.919);
   --primary-foreground: oklch(1.0000 0 0);
   --secondary: oklch(0.8575 0.0145 268.4756);
   --secondary-foreground: oklch(0.4355 0.0430 279.3250);

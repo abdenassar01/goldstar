@@ -4,6 +4,8 @@ import { useQuery } from "convex/react";
 import { api } from "@goldstart/backend/convex/_generated/api";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Download01FreeIcons } from "@hugeicons/core-free-icons";
 
 export function DownloadButton() {
     const items = useQuery(api.items.list, {});
@@ -46,8 +48,10 @@ export function DownloadButton() {
 
     return (
         <div className="fixed bottom-4 right-4">
-            <Button size="icon" onClick={handleDownload} disabled={!items}>
-                <Download className="h-4 w-4" />
+            <Button className="bg-primary/10 rounded-xl text-primary items-center flex gap-3 " onClick={handleDownload} disabled={!items}>
+                <div className="">Download PDF</div>
+                <HugeiconsIcon icon={Download01FreeIcons} className="h-4 w-4 " />
+
             </Button>
         </div>
     );
