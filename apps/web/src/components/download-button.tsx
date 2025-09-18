@@ -1,5 +1,4 @@
 import { Button } from "./ui/button";
-import { Download } from "lucide-react";
 import { useQuery } from "convex/react";
 import { api } from "@goldstart/backend/convex/_generated/api";
 import jsPDF from "jspdf";
